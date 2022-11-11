@@ -7,9 +7,9 @@ export const create_student = (datas) => async (dispatch) => {
     const data = res.data;
 
     console.log(data.data);
-    if(data.status == "error"){
-        return data.data;
+    if(data.status == "ok"){
+        window.location.assign('/')
     }
-    console.log(123);
-
+    
+    return data.data;
 }

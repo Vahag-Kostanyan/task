@@ -7,16 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Student extends Model
 {
+    const ACTIVE = "active";
+    const INACTIVE = "inactive";
 
     protected $table = "student";
     
-    protected $filabel = [
+    protected $fillable = [
         "first_name",
         "last_name",
         "email",
         "phone",
         "favorite_sport",
         "date_of_birth",
+        "status"
     ];
     use HasFactory;
 }

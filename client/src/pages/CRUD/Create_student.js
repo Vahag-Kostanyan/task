@@ -15,15 +15,16 @@ const Signup = () => {
 
 
     const dispatch = useDispatch();
-    const signupHandeler = async () => {
 
-    
-        const data = await dispatch(create_student({first_name, last_name, date_of_birth, email, phone, favorite_sport}));
-
+    const signupHandeler = async (e) => {
+        e.preventDefault();
+        const data = dispatch(create_student({first_name, last_name, date_of_birth, email, phone, favorite_sport}));
+        
         setErrors(data)
+
     }
     return (
-        <div className='signup'>
+        <form className='signup'>
             <input type="text" placeholder='first name' value={first_name} 
             onChange={e => setFirst_name(e.target.value)}/>
             <input type="text" placeholder='last name' value={last_name}
@@ -56,7 +57,7 @@ const Signup = () => {
                 <>
                 </>
             )}
-        </div>
+        </form>
     );
 }
 

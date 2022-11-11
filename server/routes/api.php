@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\CrudController;
+use App\Http\Controllers\StudentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['prefix' => "/crud", "middleware" => "cors"], function() {
-    Route::post("/create_student", [CrudController::class, "create_student"]);
-    Route::post("/edit_student", [CrudController::class, "edit_student"]);
-    Route::get("/get_student", [CrudController::class, "get_student"]);
+    Route::post("/create_student", [StudentController::class, "create_student"]);
+    Route::post("/edit_student", [StudentController::class, "edit_student"]);
+    Route::get("/get_student", [StudentController::class, "get_student"]);
 });
