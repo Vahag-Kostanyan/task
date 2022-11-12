@@ -18,8 +18,8 @@ return new class extends Migration
             $table->id();
             $table->string("first_name");
             $table->string("last_name");
-            $table->string("phone");
-            $table->string("email");
+            $table->string("phone")->unique();
+            $table->string("email")->unique();
             $table->string("favorite_sport");
             $table->date("date_of_birth");
             $table->enum("status", [Student::ACTIVE ,Student::INACTIVE])->default(Student::ACTIVE);

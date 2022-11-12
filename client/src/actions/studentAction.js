@@ -8,6 +8,7 @@ export const create_student = (datas) => async (dispatch) => {
 
     console.log(data.data);
     if(data.status == "ok"){
+        return
         window.location.assign('/')
     }
     

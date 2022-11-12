@@ -16,7 +16,7 @@ class StudentController extends Controller
             "last_name" => "required|min:2|max:30",
             "favorite_sport" => "required|min:2|max:30",
             "date_of_birth" => "required|date|max:30",
-            "phone" => "required|min:8|max:14|unique:student",
+            "phone" => "required|min:8|max:14|regex:/^[0-9]+$/|unique:student",
         ]);
 
         if ($validator->fails()) {
@@ -71,7 +71,7 @@ class StudentController extends Controller
             }
         }
 
-        $student = Student::updated($request->all());
+        $student = Student::where("id", $request->input("id"))->updated($request->all());
 
         return response()->json([
             "status" => "ok",
@@ -85,6 +85,17 @@ class StudentController extends Controller
         return response()->json([
             "status" => "ok",
             "data" => $students
+        ]);
+    }
+
+    public function delete_student(Request $request){
+        Student::where("id", $request->input("id"))->updated([
+            "status" => Student::INACTIVE
+        ]);
+
+        return response()->json([
+            "status" => "ok",
+            "data" => "student successfuly delated"
         ]);
     }
 }

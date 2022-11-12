@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { create_student } from '../../actions/crud';
-
+import { create_student } from '../../actions/studentAction';
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css' 
 
 const Signup = () => {
 
@@ -18,7 +19,7 @@ const Signup = () => {
 
     const signupHandeler = async (e) => {
         e.preventDefault();
-        const data = dispatch(create_student({first_name, last_name, date_of_birth, email, phone, favorite_sport}));
+        const data = await dispatch(create_student({first_name, last_name, date_of_birth, email, phone, favorite_sport}));
         
         setErrors(data)
 
@@ -33,14 +34,17 @@ const Signup = () => {
             onChange={e => setDate_of_birthe(e.target.value)}/>
             <input type="email" placeholder='Email Address' value={email}
             onChange={e => setEmail(e.target.value)}/>
-            <input type="text" placeholder='Phone Number' value={phone}
-            onChange={e => setPhone(e.target.value)}/>
+            <PhoneInput
+            country={'am'}
+            value={phone}
+            onChange = {(phone) => setPhone(phone)}
+            />
             <input type="text" placeholder='Favorite sports' value={favorite_sport}
             onChange={e => setFavorite_sport(e.target.value)}/>
             <button onClick={signupHandeler}
-            disabled={!(first_name && last_name && date_of_birth && email && phone &&favorite_sport && email.includes("@") && email.includes("."))}
+            disabled={!(first_name.length >= 2 && last_name.length >= 2 && date_of_birth && phone.length >= 8 && favorite_sport.length >= 2 && email.includes("@") && email.includes(".") )}
             >create student</button>
-
+            
             
             {Object.keys(errors).length >= 1 ?(
                     <>
