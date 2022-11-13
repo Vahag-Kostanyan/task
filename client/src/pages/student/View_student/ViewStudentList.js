@@ -20,6 +20,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import { delete_student, get_students } from "../../../actions/studentAction";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 
 const ViewStudentList = () => {
@@ -28,6 +29,7 @@ const ViewStudentList = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const students = useSelector(state => state.students);
     const [deletedItemID, setDeletedItemId] = useState(0);
+    const navigate = useNavigate();
 
     useEffect(() => {
         dispatch(get_students())
@@ -72,7 +74,7 @@ const ViewStudentList = () => {
                                                 onOpen()
                                                 setDeletedItemId(item.id)
                                             }}>delete</Button>
-                                            <Button colorScheme='yellow' onClick={() => window.location.assign(`/Edit_student/${item.id}`)}>update</Button>
+                                            <Button colorScheme='yellow' onClick={() => navigate(`/Edit_student/${item.id}`)}>update</Button>
                                         </Td>
                                     </Tr>
                                 )
