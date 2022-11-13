@@ -1,4 +1,4 @@
-import { combineReducers } from "redux"
-import AuthSlice from "./AuthSlice.js"
+    import { combineReducers } from "redux"
+    import StudentSlice from "./StudentSlice.js"
 
-export default combineReducers({AuthSlice})
+    export default combineReducers({students: StudentSlice})

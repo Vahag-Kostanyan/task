@@ -11,12 +11,12 @@ class StudentController extends Controller
     public function create_student(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            "email" => "required|unique:student",
+            "email" => "required|email:rfc,dns|unique:student",
             "first_name" => "required|min:2|max:30",
             "last_name" => "required|min:2|max:30",
             "favorite_sport" => "required|min:2|max:30",
             "date_of_birth" => "required|date|max:30",
-            "phone" => "required|min:8|max:14|regex:/^[0-9]+$/|unique:student",
+            "phone" => "required|min:8|max:9|regex:/^[0-9]+$/|unique:student",
         ]);
 
         if ($validator->fails()) {
@@ -26,17 +26,27 @@ class StudentController extends Controller
             ];
         }
 
+        if ($request->input("date_of_birth") > "2008-12-31" || $request->input("date_of_birth") < "1972-01-01") {
+            return response()->json([
+                "status" => "error",
+                "data" => [
+                    "date_of_birth" => ["the student can be between 18 and 50 years old"]
+                ]
+            ]);
+        }
+
         Student::create($request->all());
 
         return response()->json([
             'status' => "ok",
+            "success" => "user successfuly created"
         ]);
     }
 
     public function edit_student(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            "email" => "required",
+            "email" => "required||email:rfc,dns",
             "first_name" => "required|min:2|max:30",
             "last_name" => "required|min:2|max:30",
             "favorite_sport" => "required|min:2|max:30",
@@ -51,36 +61,55 @@ class StudentController extends Controller
             ];
         }
 
+
+        if ($request->input("date_of_birth") > "2008-12-31" || $request->input("date_of_birth") < "1972-01-01") {
+            return response()->json([
+                "status" => "error",
+                "data" => [
+                    "date_of_birth" => ["the student can be between 18 and 50 years old"]
+                ]
+            ]);
+        }
+
         $students = Student::where("id", "!=", $request->input("id"))->get();
 
-        foreach($students as $student){
-            if($student->email == $request->input("email")){
+        foreach ($students as $student) {
+            if ($student->email == $request->input("email")) {
                 return response()->json([
                     "status" => "error",
                     "data" => [
-                        "email" => ["email must be unique"]
-                    ] 
+                        "email" => ["The email has already been taken."]
+                    ]
                 ]);
-            }elseif($student->phone == $request->input("phone")){
+            } elseif ($student->phone == $request->input("phone")) {
                 return response()->json([
-                    "status" => "error", 
+                    "status" => "error",
                     "data" => [
-                        "phone" => ["phone must be unique"]
+                        "phone" => ["The phone has already been taken."]
                     ]
                 ]);
             }
         }
 
-        $student = Student::where("id", $request->input("id"))->updated($request->all());
+        
 
-        return response()->json([
-            "status" => "ok",
-            "student" => $student
-        ]);
+        $student = Student::where("id", $request->input("id"))->first();
+
+        $student->first_name = $request->input("first_name");
+        $student->last_name = $request->input("last_name");
+        
+
+        if($student->save()){
+            return response()->json([
+                "status" => "ok",
+                "student" => $student,
+                "success" => "user updated successfuly"
+            ]);
+        }
     }
-    public function get_student()
+    public function get_students()
     {
-        $students = Student::where("status", Student::ACTIVE)->get();
+        $students = Student::all();
 
         return response()->json([
             "status" => "ok",
@@ -88,14 +117,23 @@ class StudentController extends Controller
         ]);
     }
 
-    public function delete_student(Request $request){
-        Student::where("id", $request->input("id"))->updated([
-            "status" => Student::INACTIVE
-        ]);
+    public function delete_student($id)
+    {
+        $student = Student::find($id)->delete();
 
         return response()->json([
             "status" => "ok",
-            "data" => "student successfuly delated"
+            "id" => $id
+        ]);
+    }
+
+    public function get_student($id)
+    {
+        $student = Student::where("id", $id)->first();
+
+        return response()->json([
+            "status" => "ok",
+            "data" => $student
         ]);
     }
 }

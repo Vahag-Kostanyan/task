@@ -22,7 +22,6 @@ return new class extends Migration
             $table->string("email")->unique();
             $table->string("favorite_sport");
             $table->date("date_of_birth");
-            $table->enum("status", [Student::ACTIVE ,Student::INACTIVE])->default(Student::ACTIVE);
             $table->timestamps();
         });
     }

@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Student extends Model
 {
-    const ACTIVE = "active";
-    const INACTIVE = "inactive";
 
     protected $table = "student";
     

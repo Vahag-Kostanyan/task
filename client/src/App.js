@@ -1,8 +1,8 @@
-import './App.css';
+import './css/App.css';
 import {BrowserRouter, Routes, Route} from "react-router-dom"
-import View_student from './pages/student/View_student';
-import Create_student from './pages/student/Create_student';
-import Edit_student from './pages/student/Edit_student';
+import View_student from './pages/student/View_student/View_student';
+import Create_student from './pages/student/CreateStudent/Create_student';
+import Edit_student from './pages/student/Edit_student/Edit_student';
 
 
 
@@ -13,7 +13,7 @@ function App() {
           <Routes>
             <Route path='/' element={<View_student/>} />
             <Route path='/Create_student' element={<Create_student/>} />
-            <Route path='/Edit_student' element={<Edit_student/>} />
+            <Route path='/Edit_student/:studentId' element={<Edit_student/>} />
           </Routes>
         </BrowserRouter>
     </div>

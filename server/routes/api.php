@@ -18,5 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['prefix' => "/crud", "middleware" => "cors"], function() {
     Route::post("/create_student", [StudentController::class, "create_student"]);
     Route::post("/edit_student", [StudentController::class, "edit_student"]);
-    Route::get("/get_student", [StudentController::class, "get_student"]);
+    Route::get("/get_students", [StudentController::class, "get_students"]);
+    Route::get("/get_student/{id}", [StudentController::class, "get_student"]);
+    Route::get("/delete_student/{id}", [StudentController::class, "delete_student"]);
 });
