@@ -11,7 +11,7 @@ class StudentController extends Controller
     public function create_student(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            "email" => "required|email:rfc,dns|unique:student",
+            "email" => "required|email|unique:student",
             "first_name" => "required|min:2|max:30",
             "last_name" => "required|min:2|max:30",
             "favorite_sport" => "required|min:2|max:30",
@@ -26,7 +26,7 @@ class StudentController extends Controller
             ];
         }
 
-        if ($request->input("date_of_birth") > "2008-12-31" || $request->input("date_of_birth") < "1972-01-01") {
+        if ($request->input("date_of_birth") > "2004-12-31" || $request->input("date_of_birth") < "1972-01-01") {
             return response()->json([
                 "status" => "error",
                 "data" => [
@@ -46,7 +46,7 @@ class StudentController extends Controller
     public function edit_student(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            "email" => "required||email:rfc,dns",
+            "email" => "required|email",
             "first_name" => "required|min:2|max:30",
             "last_name" => "required|min:2|max:30",
             "favorite_sport" => "required|min:2|max:30",
@@ -62,7 +62,7 @@ class StudentController extends Controller
         }
 
 
-        if ($request->input("date_of_birth") > "2008-12-31" || $request->input("date_of_birth") < "1972-01-01") {
+        if ($request->input("date_of_birth") > "2004-12-31" || $request->input("date_of_birth") < "1972-01-01") {
             return response()->json([
                 "status" => "error",
                 "data" => [

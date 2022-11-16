@@ -106,7 +106,7 @@ const ViewStudentList = () => {
             </TableContainer>
 
 
-            <Modal isOpen={isOpen} onClose={onClose}>
+            <Modal isOpen={isOpen} onClose={onClose} isCentered>
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader display="flex" alignItems="center" justifyContent="center">do you realy won to delet dhis student</ModalHeader>
@@ -114,7 +114,7 @@ const ViewStudentList = () => {
                         <Button colorScheme='blue' mr={3} onClick={onClose}>
                             Close
                         </Button>
-                        <Button colorScheme='red' variant='ghost' onClick={deleteStudent}>delete</Button>
+                        <Button colorScheme='red' variant='ghost' onClick={deleteStudent}>Delete</Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>
